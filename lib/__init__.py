@@ -1,5 +1,5 @@
 from lib import spider
-import pickle, time, os
+import pickle, time, os, threading, queue
 preffix = 'https://arxiv.org/'
 
 checkpoint = 'checkpoint.txt'
@@ -56,12 +56,47 @@ def download_pdf(arxiv_id, url=''):
     except:
         return False, ''
 
+share = queue.Queue(-1)
+
+def download_list(l, step, first, num):
+    print(first, num, step)
+    for i in range(first, num, step):
+        flag, file_name = download_pdf(*l[i])
+        share.put([flag, l[i][0], file_name])
+
+    share.put([-1])
+    #value['download'], value['file'] = download_pdf(each, value['pdf'])
+
+thread_num = 8
+
+def __download(q):
+    t = []
+    num = len(q)
+    for i in range(thread_num):
+        t.append(threading.Thread(target=download_list, args=(q, thread_num, i, num)))
+    for i in t:
+        i.start()
+    cnt = thread_num
+    done = 0
+    while cnt > 0:
+        data = share.get()
+        print(data)
+        if data[0] == -1:
+            cnt -= 1
+        else:
+            if data[0]:
+                data_base['arxiv_id'][data[1]]['download'] = True
+                data_base['arxiv_id'][data[1]]['file'] = data[2]
+            done += 1
+            print('Done %d/%d..' % (done, num))
+    print('[WRN] Don\'t forget to save after operation..')
 
 def download(download_all = False):
+    q = []
     for each, value in data_base['arxiv_id'].items():
         if value['succeed'] and (download_all or not value['download']):
-            value['download'], value['file'] = download_pdf(each, value['pdf'])
-    print('[WRN] Don\'t forget to save after operation..')
+            q.append([each, value['pdf']])
+    __download(q)
 
 
 def update(update_all = True):
@@ -99,4 +134,5 @@ def search(arxiv_id, show__ = False, ignore = {'abstract'}):
 
 
 
-
+if __name__ == '__main__':
+    __download([str(i) for i in range(20)])

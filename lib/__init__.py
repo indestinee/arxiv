@@ -33,7 +33,7 @@ def save():
         f.write('%s\n' % data_base_path)
 
 
-def fetch(l):
+def fetch():
     os.system('rsync -avz $sdo:~/Github/arxiv/pdf/* ./pdf/')
     os.system('rsync -avz $sdo:~/Github/arxiv/data/* ./data/')
     os.system('rsync -avz $sdo:~/Github/arxiv/checkpoint.txt ./')

@@ -11,18 +11,20 @@ def check_args():
 if __name__ == '__main__':
     args = check_args()
 
-    data_base, loaded = init()
-    if not loaded:
+    if len(data_base['arxiv_id']) == 0:
         print('[WRN] Database is empty! Update first..')
+
+
     if args.mode == 'cmd':
-        print('[WRN] Don\'t forget to save after update..')
+        print('[WRN] Don\'t forget to save after operation..')
         embed()
     elif args.mode == 'update':
-        update(data_base)
-        save(data_base)
+        update()
+        save()
     elif args.mode == 'download':
-        download(data_base)
+        download()
     elif args.mode == 'fetch':
         fetch()
     elif args.mode == 'clear':
         clear()
+

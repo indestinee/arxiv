@@ -33,8 +33,14 @@ def save():
         f.write('%s\n' % data_base_path)
 
 
-def fetch():
-    os.system('rsync -avz $sdo:~/Github/arxiv/pdf/* ./pdf/')
+def fetch(l = [], use_all = False):
+    if use_all:
+        os.system('rsync -avz $sdo:~/Github/arxiv/pdf/* ./pdf/')
+    else:
+        if type(l) != list:
+            l = [l]
+        for each in l:
+            os.system('rsync -avz $sdo:~/Github/arxiv/pdf/%s* ./pdf/' % each)
     os.system('rsync -avz $sdo:~/Github/arxiv/data/* ./data/')
     os.system('rsync -avz $sdo:~/Github/arxiv/checkpoint.txt ./')
 

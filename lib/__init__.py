@@ -59,11 +59,9 @@ def download_pdf(arxiv_id, url=''):
 share = queue.Queue(-1)
 
 def download_list(l, step, first, num):
-    print(first, num, step)
     for i in range(first, num, step):
         flag, file_name = download_pdf(*l[i])
         share.put([flag, l[i][0], file_name])
-
     share.put([-1])
     #value['download'], value['file'] = download_pdf(each, value['pdf'])
 
@@ -80,7 +78,6 @@ def __download(q):
     done = 0
     while cnt > 0:
         data = share.get()
-        print(data)
         if data[0] == -1:
             cnt -= 1
         else:

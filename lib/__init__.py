@@ -1,7 +1,6 @@
 from lib import spider
 import pickle, time, os
 
-data_base = init()
 checkpoint = 'checkpoint.txt'
 
 def clear():
@@ -22,6 +21,8 @@ def init():
     except:
         data_base = {'arxiv_id': {}, 'author': {}, 'time': {}, 'title': {}}
     return data_base
+
+data_base = init()
 
 def save():
     data_base_path = 'data/%d.pkl' % int(time.time())

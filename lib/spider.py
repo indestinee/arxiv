@@ -60,9 +60,7 @@ def update(data_base, update_all):
             data_0 = extract_data(each[0], '<a href="/abs/', '" title="Abstract">')
             arxiv_id = data_0[0]
 
-            if arxiv_id in data_arxiv:
-                continue
-            else:
+            if arxiv_id not in data_arxiv:
                 data_arxiv[arxiv_id] = {}
 
             if 'succeed' in data_arxiv[arxiv_id] and data_arxiv[arxiv_id]['succeed']:

@@ -33,7 +33,7 @@ def save():
         f.write('%s\n' % data_base_path)
 
 
-def fetch():
+def fetch(l):
     os.system('rsync -avz $sdo:~/Github/arxiv/pdf/* ./pdf/')
     os.system('rsync -avz $sdo:~/Github/arxiv/data/* ./data/')
     os.system('rsync -avz $sdo:~/Github/arxiv/checkpoint.txt ./')
@@ -60,7 +60,7 @@ share = queue.Queue(-1)
 
 def download_list(l, step, first, num):
     for i in range(first, num, step):
-        flag, file_name = download_pdf(*l[i])
+        flag, file_name = download_pdf(l[i])
         share.put([flag, l[i][0], file_name])
     share.put([-1])
     #value['download'], value['file'] = download_pdf(each, value['pdf'])
@@ -88,12 +88,15 @@ def __download(q):
             print('Done %d/%d %s..' % (done, num, 'succeed' if data[0] else 'fail'))
     print('[WRN] Don\'t forget to save after operation..')
 
-def download(download_all = False):
+def download(l = []):
     q = []
-    for each, value in data_base['arxiv_id'].items():
-        if value['succeed'] and (download_all or not value['download']):
-            q.append([each, value['pdf']])
-    __download(q)
+    if len(l) == 0:
+        for each, value in data_base['arxiv_id'].items():
+            if value['succeed'] and not value['download']):
+                q.append(each)
+        __download(q)
+    else:
+        __download(l)
 
 
 def update(update_all = True):

@@ -1,4 +1,5 @@
 import re, requests
+preffix = 'https://arxiv.org/'
 
 def reach_url(url):
     return requests.get(url, headers = {

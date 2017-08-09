@@ -1,5 +1,6 @@
 from lib import spider
 import pickle, time, os
+preffix = 'https://arxiv.org/'
 
 checkpoint = 'checkpoint.txt'
 

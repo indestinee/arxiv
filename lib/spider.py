@@ -89,4 +89,7 @@ def update(data_base, update_all):
 
 
 
-
+if __name__ == '__main__':
+    fetch('1708.02477')
+    import IPython
+    IPython.embed()

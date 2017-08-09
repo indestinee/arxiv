@@ -47,13 +47,14 @@ def file_name(arxiv_id):
 def download_pdf(arxiv_id, url=''):
     if url == '':
         url = preffix + 'pdf/' + arxiv_id
-
-    name = file_name(arxiv_id)
-    data = spider.reach_url(url).content
-    with open(name, 'wb') as f:
-        f.write(data)
-    return True, name
-    return False, ''
+    try:
+        name = file_name(arxiv_id)
+        data = spider.reach_url(url).content
+        with open(name, 'wb') as f:
+            f.write(data)
+        return True, name
+    except:
+        return False, ''
 
 share = queue.Queue(-1)
 

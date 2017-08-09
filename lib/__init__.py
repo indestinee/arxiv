@@ -1,6 +1,8 @@
 from lib import spider
 import pickle, time, os
 
+data_base = init()
+checkpoint = 'checkpoint.txt'
 
 def clear():
     os.system('rm data/* pdf/* checkpoint.txt')
@@ -13,15 +15,13 @@ def init():
         os.mkdir('pdf')
 
     try:
-        with open('checkpoint.txt', 'r') as f:
+        with open(checkpoint, 'r') as f:
             lastest = f.readlines()[-1][:-1]
         with open(lastest, 'rb') as f:
             data_base = pickle.load(f)
     except:
         data_base = {'arxiv_id': {}, 'author': {}, 'time': {}, 'title': {}}
     return data_base
-
-data_base = init()
 
 def save():
     data_base_path = 'data/%d.pkl' % int(time.time())

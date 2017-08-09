@@ -6,5 +6,5 @@ else
 fi
 git add *
 git status
-git commit -m $words
+git commit -m "$words"
 git push origin master

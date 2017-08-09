@@ -49,7 +49,7 @@ def download_pdf(arxiv_id, url=''):
         url = preffix + 'pdf/' + arxiv_id
     try:
         name = file_name(arxiv_id)
-        data = reach_url(url)
+        data = spider.reach_url(url)
         with open(name, 'wb') as f:
             f.write(data)
         return True, name

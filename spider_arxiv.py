@@ -9,7 +9,7 @@ def init():
             lastest = f.readlines()[-1][:-1]
         with open(lastest, 'rb') as f:
             return pickle.load(f)
-    except
+    except:
         return {'arxiv_id': {}, 'author': {}, 'time': {}, 'title': {}}
 
 def save(data):

@@ -37,12 +37,20 @@ def fetch(l = [], use_all = False):
     if use_all:
         os.system('rsync -avz $sdo:~/Github/arxiv/pdf/* ./pdf/')
     else:
-        if type(l) != list:
-            l = [l]
-        for each in l:
-            os.system('rsync -avz $sdo:~/Github/arxiv/pdf/*%s* ./pdf/' % each)
-    os.system('rsync -avz $sdo:~/Github/arxiv/data/* ./data/')
-    os.system('rsync -avz $sdo:~/Github/arxiv/checkpoint.txt ./')
+        ll = [l] if type(l) != list else l
+        
+        for each in ll:
+            cmd = 'rsync -avz $sdo:~/Github/arxiv/pdf/%s ./pdf/' % each.replace(' ', '_')
+            print('--------\n>>>>  %s\n--------' % cmd)
+            os.system(cmd)
+
+    cmd = 'rsync -avz $sdo:~/Github/arxiv/data/* ./data/'
+    print('--------\n>>>>  %s\n--------' % cmd)
+    os.system(cmd)
+
+    cmd = 'rsync -avz $sdo:~/Github/arxiv/checkpoint.txt ./'
+    print('--------\n>>>>  %s\n--------' % cmd)
+    os.system(cmd)
 
 
 def file_name(arxiv_id):

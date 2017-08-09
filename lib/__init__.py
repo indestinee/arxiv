@@ -40,7 +40,7 @@ def fetch(l = [], use_all = False):
         if type(l) != list:
             l = [l]
         for each in l:
-            os.system('rsync -avz $sdo:~/Github/arxiv/pdf/%s* ./pdf/' % each)
+            os.system('rsync -avz $sdo:~/Github/arxiv/pdf/*%s* ./pdf/' % each)
     os.system('rsync -avz $sdo:~/Github/arxiv/data/* ./data/')
     os.system('rsync -avz $sdo:~/Github/arxiv/checkpoint.txt ./')
 

@@ -1,4 +1,4 @@
-import re, requests
+import re, requests, time
 preffix = 'https://arxiv.org/'
 
 def reach_url(url):

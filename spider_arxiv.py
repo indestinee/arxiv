@@ -1,20 +1,24 @@
 import IPython, os, pickle, re, requests, time
 
 preffix = 'https://arxiv.org/'
-data_base_path = 'data.pkl'
-
+checkpoint = 'checkpoint.txt'
 
 def init():
-    if os.path.isfile(data_base_path):
-        with open(data_base_path, 'rb') as f:
+    try:
+        with open(checkpoint, 'r') as f:
+            lastest = f.readlines()[-1][:-1]
+        with open(lastest, 'rb') as f:
             return pickle.load(f)
-    return {'arxiv_id': {}, 'author': {}, 'time': {}, 'title': {}}
+    except
+        return {'arxiv_id': {}, 'author': {}, 'time': {}, 'title': {}}
 
 def save(data):
-    return
+    data_base_path = 'data/%d.pkl' % int(time.time())
     with open(data_base_path, 'wb') as f:
         pickle.dump(data, f)
-
+    with open(checkpoint, 'a') as f:
+        f.write('%s\n' % data_base_path)
+    
 def reach_url(url):
     return requests.get(url, headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
@@ -118,7 +122,7 @@ def download(download_all = False):
 
 data_base = init()
 remain, totle = update(data_base)
-print('Need to fetch %d, fetched %d in fact..' % (totle, fetch))
+print('Need to fetch %d, fetched %d in fact..' % (totle, remain))
 save(data_base)
 download()
 

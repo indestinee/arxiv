@@ -85,7 +85,7 @@ def __download(q):
                 data_base['arxiv_id'][data[1]]['download'] = True
                 data_base['arxiv_id'][data[1]]['file'] = data[2]
             done += 1
-            print('Done %d/%d..' % (done, num))
+            print('Done %d/%d %s..' % (done, num, 'succeed' if data[0] else 'fail'))
     print('[WRN] Don\'t forget to save after operation..')
 
 def download(download_all = False):

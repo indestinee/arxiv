@@ -92,7 +92,7 @@ def download(l = []):
     q = []
     if len(l) == 0:
         for each, value in data_base['arxiv_id'].items():
-            if value['succeed'] and not value['download']):
+            if value['succeed'] and not value['download']:
                 q.append(each)
         __download(q)
     else:

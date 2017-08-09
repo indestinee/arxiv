@@ -39,14 +39,14 @@ def fetch(arxiv_id):
     information = get_information(preffix + 'abs/' + arxiv_id)
     return information
 
-def update(data_base, update_all = False):
+def update(data_base, update_all):
     data_arxiv = data_base['arxiv_id']
     url = 'https://arxiv.org/list/cs.CV/recent'
     response = reach_url(url)
     data = extract_data(response.text, '<a href="/list/cs.CV/pastweek\?show=', '">all</a>')
     assert len(data) == 2 and data[0] == data[1], data
     num = int(data[0])
-    remain = num - len(data_base) if not update_all else num
+    remain = (num - len(data_base)) if not update_all else num
     count = 0
     if remain == 0:
         return count, remain

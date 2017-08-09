@@ -1,24 +1,5 @@
-import IPython, os, pickle, re, requests, time
+import re, requests
 
-preffix = 'https://arxiv.org/'
-checkpoint = 'checkpoint.txt'
-
-def init():
-    try:
-        with open(checkpoint, 'r') as f:
-            lastest = f.readlines()[-1][:-1]
-        with open(lastest, 'rb') as f:
-            return pickle.load(f)
-    except:
-        return {'arxiv_id': {}, 'author': {}, 'time': {}, 'title': {}}
-
-def save(data):
-    data_base_path = 'data/%d.pkl' % int(time.time())
-    with open(data_base_path, 'wb') as f:
-        pickle.dump(data, f)
-    with open(checkpoint, 'a') as f:
-        f.write('%s\n' % data_base_path)
-    
 def reach_url(url):
     return requests.get(url, headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
@@ -53,15 +34,12 @@ def get_information(url):
 
     return {'title': title, 'abstract': abstract, 'author': author, 'last_submission': last_submission, 'comments': comments}
 
-def output_infor(data):
-    for key, value in data.items():
-        print(key, value)
 
 def fetch(arxiv_id):
     information = get_information(preffix + 'abs/' + arxiv_id)
     return information
 
-def update(data_base, update_all = False):
+def __update(data_base, update_all = False):
     url = 'https://arxiv.org/list/cs.CV/recent'
     response = reach_url(url)
     data = extract_data(response.text, '<a href="/list/cs.CV/pastweek\?show=', '">all</a>')
@@ -111,19 +89,8 @@ def update(data_base, update_all = False):
         print('Done [%d/%d]..' % (cnt, remain))
     return count, remain
 
-def download_pdf(url):
-    print(url)
-    return False
-
-def download(download_all = False):
-    for each, value in data_base['arxiv_id'].items():
-        if value['succeed'] and not value['download']:
-            value['download'] = download_pdf(value['pdf'])
-
-data_base = init()
-remain, totle = update(data_base)
-print('Need to fetch %d, fetched %d in fact..' % (totle, remain))
-save(data_base)
-download()
 
 
+def update(data_base, update_all = True):
+    remain, totle = update(data_base, update_all)
+    print('Need to fetch %d, fetched %d in fact..' % (totle, remain))

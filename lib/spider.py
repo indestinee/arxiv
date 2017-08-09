@@ -85,12 +85,10 @@ def __update(data_base, update_all = False):
             count += 1
         except:
             data_arxiv[arxiv_id]['succeed'] = False
-            print('Fail to download arxiv_id %s' % arxiv_id)
+            print('Fail to reach arxiv_id %s' % arxiv_id)
         print('Done [%d/%d]..' % (cnt, remain))
     return count, remain
 
 
 
-def update(data_base, update_all = True):
-    remain, totle = __update(data_base, update_all)
-    print('Need to fetch %d, fetched %d in fact..' % (totle, remain))
+

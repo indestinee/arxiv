@@ -4,7 +4,7 @@ from lib import *
 
 def check_args():
     parser = ArgumentParser()
-    parser.add_argument('--order', default='cmd', choices=['cmd', 'update', 'download', 'fetch'])
+    parser.add_argument('-m', '--mode', default='cmd', choices=['cmd', 'update', 'download', 'fetch', 'clear'])
     return parser.parse_args()
 
 
@@ -14,13 +14,15 @@ if __name__ == '__main__':
     data_base, loaded = init()
     if not loaded:
         print('[WRN] Database is empty! Update first..')
-    if args.order == 'cmd':
+    if args.mode == 'cmd':
         print('[WRN] Don\'t forget to save after update..')
         embed()
-    elif args.order == 'update':
+    elif args.mode == 'update':
         update(data_base)
         save(data_base)
-    elif args.order == 'download':
+    elif args.mode == 'download':
         download(data_base)
-    elif args.order == 'fetch':
+    elif args.mode == 'fetch':
         fetch()
+    elif args.mode == 'clear':
+        clear()

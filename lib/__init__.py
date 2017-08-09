@@ -41,7 +41,7 @@ def fetch():
 
 def file_name(arxiv_id):
     if arxiv_id in data_base['arxiv_id']:
-        return 'pdf/' + (arxiv_id + '::' + data_base['arxiv_id'][arxiv_id]['title']).replace(' ', '_')
+        return 'pdf/' + (arxiv_id + '::' + data_base['arxiv_id'][arxiv_id]['title'] + '.pdf').replace(' ', '_')
     return ''
 
 def download_pdf(arxiv_id, url=''):

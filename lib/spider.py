@@ -92,5 +92,5 @@ def __update(data_base, update_all = False):
 
 
 def update(data_base, update_all = True):
-    remain, totle = update(data_base, update_all)
+    remain, totle = __update(data_base, update_all)
     print('Need to fetch %d, fetched %d in fact..' % (totle, remain))

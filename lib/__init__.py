@@ -95,6 +95,7 @@ def __download(q):
         if data[0] == -1:
             cnt -= 1
         else:
+            print(data)
             if data[0]:
                 data_base['arxiv_id'][data[1]]['download'] = True
                 data_base['arxiv_id'][data[1]]['file'] = data[2]

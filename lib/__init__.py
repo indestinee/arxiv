@@ -75,8 +75,7 @@ share = queue.Queue(-1)
 def download_list(l, step, first, num):
     for i in range(first, num, step):
         flag, file_name = download_pdf(l[i])
-        print(l[i])
-        share.put([flag, l[i][0], file_name])
+        share.put([flag, l[i], file_name])
     share.put([-1])
     #value['download'], value['file'] = download_pdf(each, value['pdf'])
 
@@ -96,7 +95,6 @@ def __download(q):
         if data[0] == -1:
             cnt -= 1
         else:
-            print(data)
             if data[0]:
                 data_base['arxiv_id'][data[1]]['download'] = True
                 data_base['arxiv_id'][data[1]]['file'] = data[2]

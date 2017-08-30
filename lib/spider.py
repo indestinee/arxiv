@@ -94,11 +94,9 @@ def update(data_base, update_all):
             information.update({'arxiv_id': arxiv_id, 'download': False, 'succeed': True, 'pdf': preffix + 'pdf/' + arxiv_id})
             data_arxiv[information['arxiv_id']] = information.copy()
             
-            print('test begin')
             for category in ret:
                 if 'comments' in information and category[0] in information['comments']:
                     category[1].append(arxiv_id)
-            print('test done')
 
             tt = time.strftime('%Y-%m-%d', information['last_submission'])
             if tt not in data_base['time']:

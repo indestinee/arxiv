@@ -8,6 +8,8 @@ def check_args():
     return parser.parse_args()
 
 
+
+
 if __name__ == '__main__':
     args = check_args()
 
@@ -27,4 +29,11 @@ if __name__ == '__main__':
         fetch()
     elif args.mode == 'clear':
         clear()
+    elif args.mode == 'auto':
+        while True:
+            update()
+            save()
+            data_base = init()
+            time.sleep(86400)
+
 

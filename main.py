@@ -4,7 +4,7 @@ from lib import *
 
 def check_args():
     parser = ArgumentParser()
-    parser.add_argument('-m', '--mode', default='cmd', choices=['cmd', 'update', 'download', 'fetch', 'clear'])
+    parser.add_argument('-m', '--mode', default='cmd', choices=['cmd', 'update', 'download', 'fetch', 'clear', 'auto'])
     return parser.parse_args()
 
 

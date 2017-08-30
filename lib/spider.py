@@ -1,4 +1,5 @@
 import re, requests, time
+from IPython import embed
 preffix = 'https://arxiv.org/'
 
 def reach_url(url):
@@ -54,6 +55,7 @@ def init_lib(data_base, keys):
                 except:
                     pass
         ret.append([each, data_base[each]])
+    return ret
 
 
 
@@ -94,7 +96,6 @@ def update(data_base, update_all):
             
             print('test begin')
             for category in ret:
-                embed()
                 if 'comments' in information and category[0] in information['comments']:
                     category[1].append(arxiv_id)
             print('test done')

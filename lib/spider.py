@@ -40,8 +40,29 @@ def fetch(arxiv_id):
     information = get_information(preffix + 'abs/' + arxiv_id)
     return information
 
+
+def init_lib(data_base, keys):
+    ret = []
+    for each in keys:
+        if not each in data_base:
+            data_base[each] = []
+            for key, value in data_base['arxiv_id'].items():
+                try:
+                    data = value['comments']
+                    if each in data:
+                        data_base[each].append(key)
+                except:
+                    pass
+        ret.append([each, data_base[each]])
+
+
+
+
 def update(data_base, update_all):
     data_arxiv = data_base['arxiv_id']
+    
+    ret = init_lib(data_base, ['CVPR', 'ICCV'])
+
     url = 'https://arxiv.org/list/cs.CV/recent'
     response = reach_url(url)
     data = extract_data(response.text, '<a href="/list/cs.CV/pastweek\?show=', '">all</a>')
@@ -70,6 +91,12 @@ def update(data_base, update_all):
             information = fetch(arxiv_id)
             information.update({'arxiv_id': arxiv_id, 'download': False, 'succeed': True, 'pdf': preffix + 'pdf/' + arxiv_id})
             data_arxiv[information['arxiv_id']] = information.copy()
+            
+            print('test begin')
+            for category in ret:
+                if 'comments' in information and category[0] in information['comments']:
+                    category[1].append(arxiv_id)
+            print('test done')
 
             tt = time.strftime('%Y-%m-%d', information['last_submission'])
             if tt not in data_base['time']:

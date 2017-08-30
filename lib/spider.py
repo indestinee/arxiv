@@ -94,6 +94,7 @@ def update(data_base, update_all):
             
             print('test begin')
             for category in ret:
+                embed()
                 if 'comments' in information and category[0] in information['comments']:
                     category[1].append(arxiv_id)
             print('test done')
